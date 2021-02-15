@@ -19,10 +19,11 @@ public abstract class BasicScreen extends ScreenAdapter {
         camera = new OrthographicCamera();
         mouseVector3 = new Vector3();
         mouseCoordinate = new Coordinate(0, 0);
+        camera = new OrthographicCamera();
     }
 
     protected void clearScreen() {
-        Gdx.gl.glClearColor(0,0,0,0);
+        Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 

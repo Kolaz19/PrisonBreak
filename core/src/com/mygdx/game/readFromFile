@@ -1,3 +1,6 @@
 				InputStream inp = getClass().getClassLoader().getResourceAsStream("save.txt");
 				InputStreamReader fis = new InputStreamReader(inp);
 				BufferedReader reader = new BufferedReader(fis);
+
+				TextureAtlas atlas = new TextureAtlas("Deep.atlas");
+                animation = new Animation<TextureRegion>(0.2f,atlas.findRegions("characterRunning"), Animation.PlayMode.LOOP);
