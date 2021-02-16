@@ -39,7 +39,7 @@ public class Level extends BasicScreen {
         this.updateStateTime();
         map.setView(camera);
         Controls.updateDiagonal();
-        character.resetState();
+        character.resetState(Controls.diagonal);
         moveCharacters();
 
 
@@ -56,45 +56,7 @@ public class Level extends BasicScreen {
     }
 
     private void moveCharacters() {
-        int initialSpeed;
-        if (Controls.diagonal) {
-            initialSpeed = (int) (Math.sin(45) * 1);
-        } else {
-            initialSpeed = 1;
-        }
 
-
-        if (Controls.isUpButtonPressed()) {
-            int speedToMove = initialSpeed;
-            while (mapCollision.willHitUpperBoundary(character,speedToMove)) {
-                speedToMove--;
-            }
-            character.moveUp(speedToMove);
-        }
-
-        if (Controls.isDownButtonPressed()) {
-            int speedToMove = initialSpeed;
-            while (mapCollision.willHitBottomBoundary(character,speedToMove)) {
-                speedToMove--;
-            }
-            character.moveDown(speedToMove);
-        }
-
-        if (Controls.isLeftButtonPressed()) {
-            int speedToMove = initialSpeed;
-            while (mapCollision.willHitLeftBoundary(character,speedToMove)) {
-                speedToMove--;
-            }
-            character.moveLeft(speedToMove);
-        }
-
-        if (Controls.isRightButtonPressed()) {
-            int speedToMove = initialSpeed;
-            while (mapCollision.willHitRightBoundary(character,speedToMove)) {
-                speedToMove--;
-            }
-            character.moveRight(speedToMove);
-        }
     }
 
 }

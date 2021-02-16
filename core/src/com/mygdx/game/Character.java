@@ -8,12 +8,18 @@ public class Character extends Coordinate {
     private int width;
     private State state;
 
+    private int speedRight;
+    private int speedLeft;
+    private int speedUp;
+    private int speedDown;
+
+
     enum State {
         IDLE,
-        MOVELEFT,
-        MOVERIGHT,
-        MOVEUP,
-        MOVEDOWN,
+        UP,
+        RIGHT,
+        LEFT,
+        DOWN
     }
 
     public Character(float x, float y, int height, int width) {
@@ -23,28 +29,46 @@ public class Character extends Coordinate {
         state = State.IDLE;
     }
 
-    public void resetState() {
+    public void resetState(boolean diagonal) {
+        if (diagonal) {
+            speedRight = speedLeft = speedDown = speedUp = (int) (Math.sin(45) * 1);
+        } else {
+            speedRight = speedLeft = speedDown = speedUp = 3;
+        }
         state = State.IDLE;
     }
 
-    public void moveRight(int pixels) {
-        this.addToX(pixels);
-        state = State.MOVERIGHT;
+    public void setSpeedInPixels(State direction, int speedInPixel) {
+        switch (state) {
+            case UP: speedUp = speedInPixel;
+            break;
+            case DOWN: speedDown = speedInPixel;
+            break;
+            case LEFT: speedLeft = speedInPixel;
+            break;
+            case RIGHT: speedRight = speedInPixel;
+            break;
+        }
     }
 
-    public void moveLeft(int pixels) {
-        this.addToX(pixels * -1);
-        state = State.MOVELEFT;
+    public void moveRight() {
+        this.addToX(speedRight);
+        state = State.RIGHT;
     }
 
-    public void moveUp(int pixels) {
-        this.addToY(pixels);
-        state = State.MOVEUP;
+    public void moveLeft() {
+        this.addToX(speedLeft * -1);
+        state = State.LEFT;
     }
 
-    public void moveDown(int pixels) {
-        this.addToY(pixels * -1);
-        state = State.MOVEDOWN;
+    public void moveUp() {
+        this.addToY(speedUp);
+        state = State.UP;
+    }
+
+    public void moveDown() {
+        this.addToY(speedDown * -1);
+        state = State.DOWN;
     }
 
     public int getHeight() {
