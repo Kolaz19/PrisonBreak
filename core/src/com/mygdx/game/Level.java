@@ -1,10 +1,15 @@
 package com.mygdx.game;
 
+
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class Level extends BasicScreen {
     Map map;
+    MapCollision mapCollision;
+    Character character;
+    Texture texture;
 
 
 
@@ -12,6 +17,9 @@ public class Level extends BasicScreen {
         map = new Map("Level3.tmx");
         setupCamera();
         spriteBatch = new SpriteBatch();
+        mapCollision = new MapCollision(map,10,10);
+        character = new Character(20,20,20,5);
+        texture = new Texture ("characterIdle.png");
     }
 
 
@@ -30,10 +38,15 @@ public class Level extends BasicScreen {
         this.updateMouseCoordinate();
         this.updateStateTime();
         map.setView(camera);
+        Controls.updateDiagonal();
+        character.resetState();
+        moveCharacters();
+
 
         map.render("Default");
 
         spriteBatch.begin();
+        spriteBatch.draw(texture,character.getX(),character.getY());
         spriteBatch.end();
     }
 
@@ -42,5 +55,46 @@ public class Level extends BasicScreen {
         super.show();
     }
 
+    private void moveCharacters() {
+        int initialSpeed;
+        if (Controls.diagonal) {
+            initialSpeed = (int) (Math.sin(45) * 1);
+        } else {
+            initialSpeed = 1;
+        }
+
+
+        if (Controls.isUpButtonPressed()) {
+            int speedToMove = initialSpeed;
+            while (mapCollision.willHitUpperBoundary(character,speedToMove)) {
+                speedToMove--;
+            }
+            character.moveUp(speedToMove);
+        }
+
+        if (Controls.isDownButtonPressed()) {
+            int speedToMove = initialSpeed;
+            while (mapCollision.willHitBottomBoundary(character,speedToMove)) {
+                speedToMove--;
+            }
+            character.moveDown(speedToMove);
+        }
+
+        if (Controls.isLeftButtonPressed()) {
+            int speedToMove = initialSpeed;
+            while (mapCollision.willHitLeftBoundary(character,speedToMove)) {
+                speedToMove--;
+            }
+            character.moveLeft(speedToMove);
+        }
+
+        if (Controls.isRightButtonPressed()) {
+            int speedToMove = initialSpeed;
+            while (mapCollision.willHitRightBoundary(character,speedToMove)) {
+                speedToMove--;
+            }
+            character.moveRight(speedToMove);
+        }
+    }
 
 }
