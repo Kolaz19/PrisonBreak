@@ -1,8 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-
 public class Character extends Coordinate {
     private int height;
     private int width;
@@ -31,24 +28,44 @@ public class Character extends Coordinate {
 
     public void resetState(boolean diagonal) {
         if (diagonal) {
-            speedRight = speedLeft = speedDown = speedUp = (int) (Math.sin(45) * 1);
+            speedRight = speedLeft = speedDown = speedUp = (int) (Math.sin(45) * 2);
         } else {
-            speedRight = speedLeft = speedDown = speedUp = 3;
+            speedRight = speedLeft = speedDown = speedUp = 2;
         }
         state = State.IDLE;
     }
 
-    public void setSpeedInPixels(State direction, int speedInPixel) {
-        switch (state) {
-            case UP: speedUp = speedInPixel;
-            break;
-            case DOWN: speedDown = speedInPixel;
-            break;
-            case LEFT: speedLeft = speedInPixel;
-            break;
-            case RIGHT: speedRight = speedInPixel;
-            break;
-        }
+
+    public void addToSpeedUp(int amount) {
+        speedUp += amount;
+    }
+
+    public void addToSpeedDown(int amount) {
+        speedDown += amount;
+    }
+
+    public void addToSpeedRight(int amount) {
+        speedRight += amount;
+    }
+
+    public void addToSpeedLeft(int amount) {
+        speedLeft += amount;
+    }
+
+    public int getSpeedUp() {
+        return speedUp;
+    }
+
+    public int getSpeedDown() {
+        return speedDown;
+    }
+
+    public int getSpeedRight() {
+        return speedRight;
+    }
+
+    public int getSpeedLeft() {
+        return speedLeft;
     }
 
     public void moveRight() {
