@@ -14,10 +14,8 @@ public class Character extends Coordinate {
 
     enum State {
         IDLE,
-        UP,
         RIGHT,
         LEFT,
-        DOWN
     }
 
     public Character(float x, float y, int height, int width) {
@@ -82,12 +80,10 @@ public class Character extends Coordinate {
 
     public void moveUp() {
         this.addToY(speedUp);
-        state = State.UP;
     }
 
     public void moveDown() {
         this.addToY(speedDown * -1);
-        state = State.DOWN;
     }
 
     public int getHeight() {

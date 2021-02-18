@@ -65,8 +65,9 @@ public class Collision {
                 character.addToSpeedRight(character.getSpeedRight() * -1);
             }
         }
-
     }
+
+    //TODO Character collision together
 
 
 

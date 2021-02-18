@@ -36,7 +36,7 @@ public abstract class BasicScreen extends ScreenAdapter {
          stateTime += Gdx.graphics.getDeltaTime();
     }
 
-    protected float getStateTime() {
+    public float getStateTime() {
         return stateTime;
     }
 
