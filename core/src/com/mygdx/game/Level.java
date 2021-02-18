@@ -11,6 +11,7 @@ public class Level extends BasicScreen {
     Texture texture;
     Collision collisionManager;
     ArrayList<Character> characters;
+    CameraManager camManager;
     Texture text;
 
 
@@ -27,6 +28,8 @@ public class Level extends BasicScreen {
         characters = new ArrayList<>();
         addCharacters();
         text = new Texture("characterIdle.png");
+        //Cam
+        camManager = new CameraManager(camera,map);
     }
 
 
@@ -55,6 +58,8 @@ public class Level extends BasicScreen {
         moveCharacters();
 
         map.render("Default");
+        camManager.adjustCamera(characters);
+
 
         spriteBatch.begin();
         for (Character entity : characters) {
@@ -72,12 +77,17 @@ public class Level extends BasicScreen {
     private void addCharacters() {
         Character character1 = new Character(59*16,9*16,15,6);
         characters.add(character1);
+        Character character2 = new Character (60*16, 10*16,15,6);
+        characters.add(character2);
+        Character character3 = new Character (61*16, 11*16,15,6);
+        characters.add(character3);
     }
 
     private void adjustSpeedOfCharacters () {
         for (Character entity: characters) {
             collisionManager.reduceSpeedThroughCollision(entity);
         }
+        collisionManager.stopCharactersOutOfCamera(characters,camera);
     }
 
     private void moveCharacters() {

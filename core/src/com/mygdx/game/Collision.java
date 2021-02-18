@@ -1,5 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
+
+import java.util.ArrayList;
+
 public class Collision {
     private MapCollision mapCollision;
 
@@ -48,6 +52,20 @@ public class Collision {
         while (mapCollision.willHitLeftBoundary(character)) {
             character.addToSpeedLeft(- 1);
         }
+    }
+
+    public void stopCharactersOutOfCamera(ArrayList<Character> characters, OrthographicCamera cam) {
+        int leftX = (int) (cam.position.x - cam.viewportWidth / 2);
+        int rightX = (int) (cam.position.x + cam.viewportWidth / 2);
+
+        for (Character character : characters) {
+            if (character.getX() < leftX + 20) {
+                character.addToSpeedLeft(character.getSpeedLeft() * -1);
+            } else if (character.getX() > rightX - 20) {
+                character.addToSpeedRight(character.getSpeedRight() * -1);
+            }
+        }
+
     }
 
 

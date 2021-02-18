@@ -4,6 +4,7 @@ public class Character extends Coordinate {
     private int height;
     private int width;
     private State state;
+    private boolean trapped;
 
     private int speedRight;
     private int speedLeft;
@@ -24,6 +25,7 @@ public class Character extends Coordinate {
         this.height = height;
         this.width = width;
         state = State.IDLE;
+        trapped = true;
     }
 
     public void resetState(boolean diagonal) {
@@ -98,6 +100,10 @@ public class Character extends Coordinate {
 
     public State getState() {
         return state;
+    }
+
+    public void setTrapped(boolean isTrapped) {
+        trapped = isTrapped;
     }
 
 }
