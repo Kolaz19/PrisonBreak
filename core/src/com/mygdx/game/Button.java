@@ -55,8 +55,12 @@ public class Button {
         }
     }
 
+    public boolean isPressed() {
+        return isPressed;
+    }
 
 
-
-
+    public int getGroup() {
+        return group;
+    }
 }

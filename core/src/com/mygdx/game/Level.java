@@ -17,7 +17,9 @@ public class Level extends BasicScreen {
     Collision collisionManager;
     ArrayList<Character> characters;
     ArrayList<Button> buttons;
+    ArrayList<Door> doors;
     CameraManager camManager;
+    DoorOpener doorManager;
     TextureAtlas atlas;
     CharacterAnimation charAnimation1;
     Music track1;
@@ -35,14 +37,18 @@ public class Level extends BasicScreen {
         //Characters
         characters = new ArrayList<>();
         buttons = new ArrayList<>();
+        doors = new ArrayList<>();
         addCharacters();
         addButtons();
+        addDoors();
         //Cam
         camManager = new CameraManager(camera,map);
+        //DoorManager
+        doorManager = new DoorOpener(buttons,doors);
         //Music
         track1 = Gdx.audio.newMusic(Gdx.files.internal("soundtrack1Loop.mp3"));
         track1.setVolume(0.2f);
-        //track1.play();
+        track1.play();
     }
 
 
@@ -72,6 +78,8 @@ public class Level extends BasicScreen {
         }
         adjustSpeedOfCharacters();
         collisionManager.checkPressedButtons(characters,buttons);
+        collisionManager.checkBlockedDoors(characters,doors);
+        doorManager.checkForDoorsToOpen();
         moveCharacters();
 
 
@@ -82,6 +90,9 @@ public class Level extends BasicScreen {
         spriteBatch.begin();
         for (Button button : buttons) {
             spriteBatch.draw(button.getCorrectTexture(),button.getX(),button.getY());
+        }
+        for (Door door : doors) {
+            spriteBatch.draw(door.getCorrectFrame(),door.getX(),door.getY());
         }
         for (Character entity : characters) {
             spriteBatch.draw(charAnimation1.getRightAnimation(entity.getState(),getStateTime()),entity.getX(),entity.getY());
@@ -107,7 +118,7 @@ public class Level extends BasicScreen {
         characters.add(character1);
         Character character2 = new Character (3, 19,15,6, 8,10, stepSound);
         characters.add(character2);
-        Character character3 = new Character (3, 14,15,6, 8, 10, stepSound);
+        Character character3 = new Character (11, 21,15,6, 8, 10, stepSound);
         characters.add(character3);
     }
 
@@ -118,7 +129,12 @@ public class Level extends BasicScreen {
 
         TextureRegion buttonUp = atlas.findRegion("button",0);
         TextureRegion buttonDown = atlas.findRegion("button",1);
-        buttons.add(new Button(buttonUp,buttonDown,59,5,1,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,15,15,1,buttonInSound, buttonOutSound));
+    }
+
+    private void addDoors() {
+        Animation<TextureRegion> doorOpen =  new Animation<TextureRegion>(0.3f,atlas.findRegions("door"), Animation.PlayMode.NORMAL);
+        doors.add(new Door(11,19,doorOpen, 1));
     }
 
     private void adjustSpeedOfCharacters () {

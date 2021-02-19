@@ -80,6 +80,32 @@ public class Collision {
         }
     }
 
+    public void checkBlockedDoors(ArrayList<Character> characters, ArrayList<Door> doors) {
+        //TODO change 5 to match wall hitbox
+        for (Character character : characters) {
+            for (Door door : doors) {
+                if (door.isOpen()) {
+                    continue;
+                }
+
+                Coordinate cordToHit = new Coordinate(character.getX() + character.getWidth() / 2, character.getY() + 7);
+                if (Controls.isUpButtonPressed()) {
+                    if (door.getHitbox().contains(cordToHit.getX(),cordToHit.getY())) {
+                        character.addToSpeedUp(character.getSpeedUp() * -1);
+                    }
+                }
+
+                cordToHit.setY(character.getY() - 1);
+                if (Controls.isDownButtonPressed()) {
+                    if (door.getHitbox().contains(cordToHit.getX(),cordToHit.getY())) {
+                        character.addToSpeedDown(character.getSpeedUp() * -1);
+                    }
+                }
+
+            }
+        }
+    }
+
     public void characterToCharacterCollision(ArrayList<Character> characters) {
         Rectangle rectToHit = new Rectangle(characters.get(0).getHitbox().getX(),characters.get(0).getHitbox().getY(),characters.get(0).getHitbox().getWidth(),characters.get(0).getHitbox().getHeight());
         for (Character charOut : characters) {
