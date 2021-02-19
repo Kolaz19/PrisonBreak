@@ -1,35 +1,48 @@
 package com.mygdx.game;
 
-
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import java.util.ArrayList;
 
 
 public class Level extends BasicScreen {
     Map map;
-    Texture texture;
     Collision collisionManager;
     ArrayList<Character> characters;
+    ArrayList<Button> buttons;
     CameraManager camManager;
-    Texture text;
-
+    TextureAtlas atlas;
+    CharacterAnimation charAnimation1;
+    Music track1;
 
 
     Level() {
         map = new Map("map.tmx");
         setupCamera();
         spriteBatch = new SpriteBatch();
-        texture = new Texture ("characterIdle.png");
         //Collision
         MapCollision mapCollision = new MapCollision(map,10,10);
         collisionManager = new Collision(mapCollision);
+        //Textures
+        atlas = new TextureAtlas("StrongerTogether.atlas");
         //Characters
         characters = new ArrayList<>();
+        buttons = new ArrayList<>();
         addCharacters();
-        text = new Texture("characterIdle.png");
+        addButtons();
         //Cam
         camManager = new CameraManager(camera,map);
+        //Music
+        track1 = Gdx.audio.newMusic(Gdx.files.internal("soundtrack1Loop.mp3"));
+        track1.setVolume(0.2f);
+        track1.play();
     }
 
 
@@ -44,26 +57,34 @@ public class Level extends BasicScreen {
     @Override
     public void render(float delta) {
         //Basic preparation for rendering
+
         this.clearScreen();
-        this.updateView();
         this.updateMouseCoordinate();
         this.updateStateTime();
+        this.updateView();
         map.setView(camera);
+
+
         Controls.updateDiagonal();
         //Logic Characters
         for (Character entity: characters) {
             entity.resetState(Controls.diagonal);
         }
         adjustSpeedOfCharacters();
+        collisionManager.checkPressedButtons(characters,buttons);
         moveCharacters();
+
 
         map.render("Default");
         camManager.adjustCamera(characters);
 
 
         spriteBatch.begin();
+        for (Button button : buttons) {
+            spriteBatch.draw(button.getCorrectTexture(),button.getX(),button.getY());
+        }
         for (Character entity : characters) {
-            spriteBatch.draw(text,entity.getX(),entity.getY());
+            spriteBatch.draw(charAnimation1.getRightAnimation(entity.getState(),getStateTime()),entity.getX(),entity.getY());
         }
         spriteBatch.end();
         map.render("Second");
@@ -75,12 +96,29 @@ public class Level extends BasicScreen {
     }
 
     private void addCharacters() {
-        Character character1 = new Character(59*16,9*16,15,6);
+        charAnimation1 = new CharacterAnimation();
+        charAnimation1.addIdleAnimation(new Animation<TextureRegion>(0.2f,atlas.findRegions("char1Idle"), Animation.PlayMode.LOOP));
+        charAnimation1.addMoveLeftAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char1RunningLeft"), Animation.PlayMode.LOOP));
+        charAnimation1.addMoveRightAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char1RunningRight"), Animation.PlayMode.LOOP));
+
+        Sound stepSound = Gdx.audio.newSound(Gdx.files.internal("step2.mp3"));
+
+        Character character1 = new Character(59*16,9*16,15,6, 8,10, stepSound);
         characters.add(character1);
-        Character character2 = new Character (60*16, 10*16,15,6);
+        Character character2 = new Character (60*16, 9*16,15,6, 8,10, stepSound);
         characters.add(character2);
-        Character character3 = new Character (61*16, 11*16,15,6);
+        Character character3 = new Character (61*16, 11*16,15,6, 8, 10, stepSound);
         characters.add(character3);
+    }
+
+    private void addButtons() {
+
+        Sound buttonInSound = Gdx.audio.newSound(Gdx.files.internal("TriggerIn.mp3"));
+        Sound buttonOutSound = Gdx.audio.newSound(Gdx.files.internal("TriggerOut.mp3"));
+
+        TextureRegion buttonUp = atlas.findRegion("button",0);
+        TextureRegion buttonDown = atlas.findRegion("button",1);
+        buttons.add(new Button(buttonUp,buttonDown,59*16,66,1,buttonInSound, buttonOutSound));
     }
 
     private void adjustSpeedOfCharacters () {
@@ -88,21 +126,31 @@ public class Level extends BasicScreen {
             collisionManager.reduceSpeedThroughCollision(entity);
         }
         collisionManager.stopCharactersOutOfCamera(characters,camera);
+        collisionManager.characterToCharacterCollision(characters);
     }
 
     private void moveCharacters() {
+        boolean playSound = false;
+
         for (Character entity: characters) {
             if (Controls.isUpButtonPressed()) {
                 entity.moveUp();
+                playSound = true;
             }
             if (Controls.isDownButtonPressed()) {
                 entity.moveDown();
+                playSound = true;
             }
             if (Controls.isRightButtonPressed()) {
                 entity.moveRight();
+                playSound = true;
             }
             if (Controls.isLeftButtonPressed()) {
                 entity.moveLeft();
+                playSound = true;
+            }
+            if (playSound) {
+                entity.playSound();
             }
         }
     }

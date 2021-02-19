@@ -28,8 +28,9 @@ public abstract class BasicScreen extends ScreenAdapter {
     }
 
     protected void updateView() {
-        spriteBatch.setProjectionMatrix(camera.combined);
         camera.update();
+        spriteBatch.setProjectionMatrix(camera.combined);
+
     }
 
     protected void updateStateTime() {

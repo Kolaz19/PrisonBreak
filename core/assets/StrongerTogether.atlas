@@ -1,0 +1,146 @@
+
+StrongerTogether.png
+size: 64, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+button
+  rotate: false
+  xy: 2, 110
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 0
+button
+  rotate: false
+  xy: 38, 110
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+char1Idle
+  rotate: false
+  xy: 38, 74
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 1
+char1Idle
+  rotate: false
+  xy: 33, 56
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 0
+char1RunningLeft
+  rotate: false
+  xy: 51, 92
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 4
+char1RunningLeft
+  rotate: false
+  xy: 20, 56
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 1
+char1RunningLeft
+  rotate: false
+  xy: 2, 20
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 3
+char1RunningLeft
+  rotate: false
+  xy: 15, 38
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 0
+char1RunningLeft
+  rotate: false
+  xy: 15, 2
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 2
+char1RunningRight
+  rotate: false
+  xy: 38, 92
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 4
+char1RunningRight
+  rotate: false
+  xy: 2, 38
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 1
+char1RunningRight
+  rotate: false
+  xy: 51, 74
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 3
+char1RunningRight
+  rotate: false
+  xy: 2, 2
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 0
+char1RunningRight
+  rotate: false
+  xy: 15, 20
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 2
+door
+  rotate: false
+  xy: 2, 92
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+door
+  rotate: false
+  xy: 20, 110
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 0
+door
+  rotate: false
+  xy: 2, 74
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 5
+door
+  rotate: false
+  xy: 20, 92
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+door
+  rotate: false
+  xy: 2, 56
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+door
+  rotate: false
+  xy: 20, 74
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1

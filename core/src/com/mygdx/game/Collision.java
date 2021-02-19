@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 
@@ -67,10 +68,61 @@ public class Collision {
         }
     }
 
-    //TODO Character collision together
+    public void checkPressedButtons(ArrayList<Character> characters, ArrayList<Button> buttons) {
+        for (Button button : buttons) {
+            boolean isPressed = false;
+            for (Character character : characters) {
+                if (button.getHitbox().overlaps(character.getHitbox())) {
+                    isPressed = true;
+                }
+            }
+            button.setPressed(isPressed);
+        }
+    }
+
+    public void characterToCharacterCollision(ArrayList<Character> characters) {
+        Rectangle rectToHit = new Rectangle(characters.get(0).getHitbox().getX(),characters.get(0).getHitbox().getY(),characters.get(0).getHitbox().getWidth(),characters.get(0).getHitbox().getHeight());
+        for (Character charOut : characters) {
+            for (Character charIn : characters) {
+                if (charOut != charIn) {
+
+                    if (Controls.isUpButtonPressed()) {
+                      rectToHit.x = charOut.getHitbox().getX();
+                      rectToHit.y = charOut.getHitbox().getY() + charOut.getSpeedUp();
+                      if (charIn.getHitbox().overlaps(rectToHit)) {
+                          charOut.addToSpeedUp(charOut.getSpeedUp() * -1);
+                      }
+                    }
+
+                    if (Controls.isDownButtonPressed()) {
+                        rectToHit.x = charOut.getHitbox().getX();
+                        rectToHit.y = charOut.getHitbox().getY() - charOut.getSpeedDown();
+                        if (charIn.getHitbox().overlaps(rectToHit)) {
+                            charOut.addToSpeedDown(charOut.getSpeedDown() * -1);
+                        }
+                    }
+
+                    if (Controls.isRightButtonPressed()) {
+                        rectToHit.x = charOut.getHitbox().getX() + charOut.getSpeedRight();
+                        rectToHit.y = charOut.getHitbox().getY();
+                        if (charIn.getHitbox().overlaps(rectToHit)) {
+                            charOut.addToSpeedRight(charOut.getSpeedRight() * -1);
+                        }
+                    }
+
+                    if (Controls.isLeftButtonPressed()) {
+                        rectToHit.x = charOut.getHitbox().getX() - charOut.getSpeedLeft();
+                        rectToHit.y = charOut.getHitbox().getY();
+                        if (charIn.getHitbox().overlaps(rectToHit)) {
+                            charOut.addToSpeedLeft(charOut.getSpeedLeft() * -1);
+                        }
+                    }
 
 
-
+                }
+            }
+        }
+    }
 
 
 }
