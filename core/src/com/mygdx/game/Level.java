@@ -42,7 +42,7 @@ public class Level extends BasicScreen {
         //Music
         track1 = Gdx.audio.newMusic(Gdx.files.internal("soundtrack1Loop.mp3"));
         track1.setVolume(0.2f);
-        track1.play();
+        //track1.play();
     }
 
 
@@ -97,17 +97,17 @@ public class Level extends BasicScreen {
 
     private void addCharacters() {
         charAnimation1 = new CharacterAnimation();
-        charAnimation1.addIdleAnimation(new Animation<TextureRegion>(0.2f,atlas.findRegions("char1Idle"), Animation.PlayMode.LOOP));
+        charAnimation1.addIdleAnimation(new Animation<TextureRegion>(0.3f,atlas.findRegions("char1Idle"), Animation.PlayMode.LOOP));
         charAnimation1.addMoveLeftAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char1RunningLeft"), Animation.PlayMode.LOOP));
         charAnimation1.addMoveRightAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char1RunningRight"), Animation.PlayMode.LOOP));
 
         Sound stepSound = Gdx.audio.newSound(Gdx.files.internal("step2.mp3"));
 
-        Character character1 = new Character(59*16,9*16,15,6, 8,10, stepSound);
+        Character character1 = new Character(3,16,15,6, 8,10, stepSound);
         characters.add(character1);
-        Character character2 = new Character (60*16, 9*16,15,6, 8,10, stepSound);
+        Character character2 = new Character (3, 19,15,6, 8,10, stepSound);
         characters.add(character2);
-        Character character3 = new Character (61*16, 11*16,15,6, 8, 10, stepSound);
+        Character character3 = new Character (3, 14,15,6, 8, 10, stepSound);
         characters.add(character3);
     }
 
@@ -118,7 +118,7 @@ public class Level extends BasicScreen {
 
         TextureRegion buttonUp = atlas.findRegion("button",0);
         TextureRegion buttonDown = atlas.findRegion("button",1);
-        buttons.add(new Button(buttonUp,buttonDown,59*16,66,1,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,59,5,1,buttonInSound, buttonOutSound));
     }
 
     private void adjustSpeedOfCharacters () {

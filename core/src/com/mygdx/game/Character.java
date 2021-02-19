@@ -12,10 +12,10 @@ public class Character extends Coordinate {
     Sound stepSound;
     int stepCounter;
 
-    private int speedRight;
-    private int speedLeft;
-    private int speedUp;
-    private int speedDown;
+    private float speedRight;
+    private float speedLeft;
+    private float speedUp;
+    private float speedDown;
 
 
     enum State {
@@ -24,20 +24,20 @@ public class Character extends Coordinate {
         LEFT,
     }
 
-    public Character(float x, float y,int height, int width, int hitBoxHeight, int hitBoxWidth, Sound step) {
-        super(x, y);
+    public Character(float tileX, float tileY,int height, int width, int hitBoxHeight, int hitBoxWidth, Sound step) {
+        super(tileX * 16, tileY * 16);
         this.height = height;
         this.width = width;
         state = State.IDLE;
         trapped = true;
-        hitbox = new Rectangle(x + width / 2 - hitBoxWidth / 2, y + width / 2 - hitBoxWidth / 2, hitBoxWidth , hitBoxHeight);
+        hitbox = new Rectangle((tileX * 16) + width / 2 - hitBoxWidth / 2, (tileY * 16) + width / 2 - hitBoxWidth / 2, hitBoxWidth , hitBoxHeight);
         this.stepSound = step;
         stepCounter = 0;
     }
 
     public void resetState(boolean diagonal) {
         if (diagonal) {
-            speedRight = speedLeft = speedDown = speedUp = 2; //(int) (Math.sin(45) * 2);
+            speedRight = speedLeft = speedDown = speedUp = (float) (Math.sin(45) * 2);
         } else {
             speedRight = speedLeft = speedDown = speedUp = 2;
         }
@@ -47,35 +47,35 @@ public class Character extends Coordinate {
     }
 
 
-    public void addToSpeedUp(int amount) {
+    public void addToSpeedUp(float amount) {
         speedUp += amount;
     }
 
-    public void addToSpeedDown(int amount) {
+    public void addToSpeedDown(float amount) {
         speedDown += amount;
     }
 
-    public void addToSpeedRight(int amount) {
+    public void addToSpeedRight(float amount) {
         speedRight += amount;
     }
 
-    public void addToSpeedLeft(int amount) {
+    public void addToSpeedLeft(float amount) {
         speedLeft += amount;
     }
 
-    public int getSpeedUp() {
+    public float getSpeedUp() {
         return speedUp;
     }
 
-    public int getSpeedDown() {
+    public float getSpeedDown() {
         return speedDown;
     }
 
-    public int getSpeedRight() {
+    public float getSpeedRight() {
         return speedRight;
     }
 
-    public int getSpeedLeft() {
+    public float getSpeedLeft() {
         return speedLeft;
     }
 

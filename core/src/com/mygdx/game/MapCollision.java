@@ -32,7 +32,7 @@ public class MapCollision {
 
     public boolean willHitRightBoundary (Character character) {
         Coordinate cordToHit = new Coordinate(character.getX(), character.getY());
-        cordToHit.addToX(character.getSpeedRight() + character.getWidth());
+        cordToHit.addToX(character.getSpeedRight() + character.getWidth() + 5);
         if (isTileBlocked(cellAtPosition((int) cordToHit.getX(),(int) cordToHit.getY()))) {
             return true;
         } else {

@@ -13,11 +13,11 @@ public class Button {
     private Sound inSound;
     private Sound outSound;
 
-    public Button(TextureRegion buttonUp, TextureRegion buttonDown, int x, int y, int group, Sound in, Sound out) {
+    public Button(TextureRegion buttonUp, TextureRegion buttonDown, int tileX, int tileY, int group, Sound in, Sound out) {
         buttonUpTexture = buttonUp;
         buttonDownTexture = buttonDown;
         this.group = group;
-        hitBox = new Rectangle(x,y,buttonDown.getRegionWidth(),buttonDown.getRegionHeight());
+        hitBox = new Rectangle(tileX * 16,tileY * 16,buttonDown.getRegionWidth(),buttonDown.getRegionHeight());
         isPressed = false;
         inSound = in;
         outSound = out;

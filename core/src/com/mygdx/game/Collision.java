@@ -24,7 +24,7 @@ public class Collision {
             return;
         }
         while (mapCollision.willHitUpperBoundary(character)) {
-            character.addToSpeedUp(- 1);
+            character.addToSpeedUp(- 0.1f);
         }
     }
 
@@ -33,7 +33,7 @@ public class Collision {
             return;
         }
         while (mapCollision.willHitBottomBoundary(character)) {
-            character.addToSpeedDown(- 1);
+            character.addToSpeedDown(- 0.1f);
         }
     }
 
@@ -42,7 +42,7 @@ public class Collision {
             return;
         }
         while (mapCollision.willHitRightBoundary(character)) {
-            character.addToSpeedRight(- 1);
+            character.addToSpeedRight(- 0.1f);
         }
     }
 
@@ -51,7 +51,7 @@ public class Collision {
             return;
         }
         while (mapCollision.willHitLeftBoundary(character)) {
-            character.addToSpeedLeft(- 1);
+            character.addToSpeedLeft(- 0.1f);
         }
     }
 
@@ -61,7 +61,7 @@ public class Collision {
 
         for (Character character : characters) {
             if (character.getX() < leftX + 20) {
-                character.addToSpeedLeft(character.getSpeedLeft() * -1);
+                character.addToSpeedLeft(character.getSpeedLeft() * - 1);
             } else if (character.getX() > rightX - 20) {
                 character.addToSpeedRight(character.getSpeedRight() * -1);
             }
@@ -90,7 +90,7 @@ public class Collision {
                       rectToHit.x = charOut.getHitbox().getX();
                       rectToHit.y = charOut.getHitbox().getY() + charOut.getSpeedUp();
                       if (charIn.getHitbox().overlaps(rectToHit)) {
-                          charOut.addToSpeedUp(charOut.getSpeedUp() * -1);
+                          charOut.addToSpeedUp(charOut.getSpeedUp() * - 1);
                       }
                     }
 
@@ -98,7 +98,7 @@ public class Collision {
                         rectToHit.x = charOut.getHitbox().getX();
                         rectToHit.y = charOut.getHitbox().getY() - charOut.getSpeedDown();
                         if (charIn.getHitbox().overlaps(rectToHit)) {
-                            charOut.addToSpeedDown(charOut.getSpeedDown() * -1);
+                            charOut.addToSpeedDown(charOut.getSpeedDown() * - 1);
                         }
                     }
 
@@ -106,7 +106,7 @@ public class Collision {
                         rectToHit.x = charOut.getHitbox().getX() + charOut.getSpeedRight();
                         rectToHit.y = charOut.getHitbox().getY();
                         if (charIn.getHitbox().overlaps(rectToHit)) {
-                            charOut.addToSpeedRight(charOut.getSpeedRight() * -1);
+                            charOut.addToSpeedRight(charOut.getSpeedRight() * - 1);
                         }
                     }
 
@@ -114,7 +114,7 @@ public class Collision {
                         rectToHit.x = charOut.getHitbox().getX() - charOut.getSpeedLeft();
                         rectToHit.y = charOut.getHitbox().getY();
                         if (charIn.getHitbox().overlaps(rectToHit)) {
-                            charOut.addToSpeedLeft(charOut.getSpeedLeft() * -1);
+                            charOut.addToSpeedLeft(charOut.getSpeedLeft() * - 1);
                         }
                     }
 
