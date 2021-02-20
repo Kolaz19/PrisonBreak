@@ -19,7 +19,21 @@ public class DoorOpener {
                     shouldOpen = false;
                 }
             }
-            door.shouldOpen(shouldOpen);
+            if(shouldOpen) {
+                door.shouldOpen();
+            }
+        }
+    }
+
+    public void setCharacterFree(ArrayList<Character> characters) {
+        for (Character character : characters) {
+            for (Door door : doors) {
+                if (door.getGroup() == character.getGroup()) {
+                    if (door.isOpen()) {
+                        character.setTrapped(false);
+                    }
+                }
+            }
         }
     }
 

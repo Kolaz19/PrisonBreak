@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -22,7 +21,7 @@ public class Level extends BasicScreen {
     DoorOpener doorManager;
     TextureAtlas atlas;
     CharacterAnimation charAnimation1;
-    Music track1;
+    MusicManager musicManager;
 
 
     Level() {
@@ -46,9 +45,8 @@ public class Level extends BasicScreen {
         //DoorManager
         doorManager = new DoorOpener(buttons,doors);
         //Music
-        track1 = Gdx.audio.newMusic(Gdx.files.internal("soundtrack1Loop.mp3"));
-        track1.setVolume(0.2f);
-        track1.play();
+        musicManager = new MusicManager();
+        addMusic();
     }
 
 
@@ -80,6 +78,7 @@ public class Level extends BasicScreen {
         collisionManager.checkPressedButtons(characters,buttons);
         collisionManager.checkBlockedDoors(characters,doors);
         doorManager.checkForDoorsToOpen();
+        doorManager.setCharacterFree(characters);
         moveCharacters();
 
 
@@ -114,22 +113,29 @@ public class Level extends BasicScreen {
 
         Sound stepSound = Gdx.audio.newSound(Gdx.files.internal("step2.mp3"));
 
-        Character character1 = new Character(3,16,15,6, 8,10, stepSound);
+        Character character1 = new Character(3,16,15,6, 8,10, 0, stepSound);
+        character1.setTrapped(false);
         characters.add(character1);
-        Character character2 = new Character (3, 19,15,6, 8,10, stepSound);
+        Character character2 = new Character (3, 19,15,6, 8,10, 0, stepSound);
+        character2.setTrapped(false);
         characters.add(character2);
-        Character character3 = new Character (11, 21,15,6, 8, 10, stepSound);
+        Character character3 = new Character (11, 21,15,6, 8, 10, 1, stepSound);
+        character3.setTrapped(true);
         characters.add(character3);
     }
 
-    private void addButtons() {
+    private void addMusic() {
+        musicManager.addTrack(Gdx.audio.newMusic(Gdx.files.internal("soundtrack1Loop.mp3")),1);
+    }
 
+    private void addButtons() {
         Sound buttonInSound = Gdx.audio.newSound(Gdx.files.internal("TriggerIn.mp3"));
         Sound buttonOutSound = Gdx.audio.newSound(Gdx.files.internal("TriggerOut.mp3"));
 
         TextureRegion buttonUp = atlas.findRegion("button",0);
         TextureRegion buttonDown = atlas.findRegion("button",1);
-        buttons.add(new Button(buttonUp,buttonDown,15,15,1,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,6,13,1,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,20,16,1,buttonInSound, buttonOutSound));
     }
 
     private void addDoors() {

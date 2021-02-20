@@ -9,6 +9,7 @@ public class Character extends Coordinate {
     private State state;
     private boolean trapped;
     private Rectangle hitbox;
+    private int group;
     Sound stepSound;
     int stepCounter;
 
@@ -17,6 +18,10 @@ public class Character extends Coordinate {
     private float speedUp;
     private float speedDown;
 
+    public int getGroup() {
+        return group;
+    }
+
 
     enum State {
         IDLE,
@@ -24,7 +29,7 @@ public class Character extends Coordinate {
         LEFT,
     }
 
-    public Character(float tileX, float tileY,int height, int width, int hitBoxHeight, int hitBoxWidth, Sound step) {
+    public Character(float tileX, float tileY,int height, int width, int hitBoxHeight, int hitBoxWidth,int group, Sound step) {
         super(tileX * 16, tileY * 16);
         this.height = height;
         this.width = width;
@@ -33,6 +38,8 @@ public class Character extends Coordinate {
         hitbox = new Rectangle((tileX * 16) + width / 2 - hitBoxWidth / 2, (tileY * 16) + width / 2 - hitBoxWidth / 2, hitBoxWidth , hitBoxHeight);
         this.stepSound = step;
         stepCounter = 0;
+        setTrapped(true);
+        this.group = group;
     }
 
     public void resetState(boolean diagonal) {
@@ -44,6 +51,10 @@ public class Character extends Coordinate {
         if (!Controls.isUpButtonPressed() && !Controls.isRightButtonPressed() && !Controls.isLeftButtonPressed() && !Controls.isDownButtonPressed()) {
             state = State.IDLE;
         }
+    }
+
+    public boolean isTrapped() {
+        return trapped;
     }
 
 

@@ -50,7 +50,7 @@ public class Door {
         return group;
     }
 
-    public void shouldOpen (boolean shouldOpen) {
-        this.isOpening = shouldOpen;
+    public void shouldOpen () {
+        this.isOpening = true;
     }
 }

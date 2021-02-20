@@ -17,6 +17,9 @@ public class CameraManager {
         int minX = (int) characters.get(0).getX();
         int maxX = (int) characters.get(0).getX();
         for (Character character : characters) {
+            if (character.isTrapped()) {
+                continue;
+            }
             if (character.getX() < minX) {
                 minX = (int) character.getX();
             } else if (character.getX() > maxX) {
