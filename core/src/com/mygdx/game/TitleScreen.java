@@ -57,8 +57,8 @@ public class TitleScreen extends BasicScreen {
 
         checkExitButtonSelected();
         checkPlayButtonSelected();
-        checkStartGame();
-        checkExit();
+
+
 
         spriteBatch.begin();
         spriteBatch.draw(background,0,0);
@@ -74,6 +74,8 @@ public class TitleScreen extends BasicScreen {
             spriteBatch.draw(exitButtonPressedTexture,exitButton.getX(),exitButton.getY());
         }
         spriteBatch.end();
+        checkExit();
+        checkStartGame();
     }
 
     private void changeMusic() {
@@ -86,6 +88,10 @@ public class TitleScreen extends BasicScreen {
         });
     }
 
+    @Override
+    public void show() {
+        Gdx.graphics.setWindowedMode(background.getWidth(), background.getHeight());
+    }
 
     private void checkPlayButtonSelected() {
         playButtonSelected = playButton.contains(mouseCoordinate.getX(), mouseCoordinate.getY());

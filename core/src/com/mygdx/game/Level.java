@@ -3,7 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -30,10 +29,10 @@ public class Level extends BasicScreen {
 
 
     Level(Starter mainGame) {
+        super();
         this.mainGame = mainGame;
         map = new Map("map.tmx");
         setupCamera();
-        spriteBatch = new SpriteBatch();
         //Collision
         MapCollision mapCollision = new MapCollision(map,10,10);
         collisionManager = new Collision(mapCollision);
@@ -72,7 +71,7 @@ public class Level extends BasicScreen {
         this.updateStateTime();
         this.updateView();
         map.setView(camera);
-        checkEnding();
+
 
 
         Controls.updateDiagonal();
@@ -104,6 +103,7 @@ public class Level extends BasicScreen {
         }
         spriteBatch.end();
         map.render("Second");
+        checkEnding();
     }
 
     @Override
