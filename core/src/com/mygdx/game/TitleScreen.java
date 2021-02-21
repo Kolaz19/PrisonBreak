@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -19,6 +20,8 @@ public class TitleScreen extends BasicScreen {
     private Starter mainGame;
     private Music musicStart;
     private Music musicLoop;
+    private Sound hover;
+    private Sound enter;
 
     public TitleScreen(Starter mainGame) {
         super();
@@ -37,6 +40,8 @@ public class TitleScreen extends BasicScreen {
         musicStart.setLooping(false);
         musicStart.play();
         changeMusic();
+        hover = Gdx.audio.newSound(Gdx.files.internal("buttonChange.mp3"));
+        enter = Gdx.audio.newSound(Gdx.files.internal("buttonEnter.mp3"));
     }
 
 
@@ -94,10 +99,20 @@ public class TitleScreen extends BasicScreen {
     }
 
     private void checkPlayButtonSelected() {
+        if (!playButtonSelected) {
+            if (playButton.contains(mouseCoordinate.getX(), mouseCoordinate.getY())) {
+                hover.play();
+            }
+        }
         playButtonSelected = playButton.contains(mouseCoordinate.getX(), mouseCoordinate.getY());
     }
 
     private void checkExitButtonSelected() {
+        if (!exitButtonSelected) {
+            if (exitButton.contains(mouseCoordinate.getX(), mouseCoordinate.getY())) {
+                hover.play();
+            }
+        }
         exitButtonSelected = exitButton.contains(mouseCoordinate.getX(), mouseCoordinate.getY());
     }
 
@@ -108,6 +123,7 @@ public class TitleScreen extends BasicScreen {
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             musicStart.stop();
             musicLoop.stop();
+            enter.play();
             mainGame.startGame();
         }
     }
@@ -137,5 +153,7 @@ public class TitleScreen extends BasicScreen {
         exitButtonTexture.dispose();
         exitButtonPressedTexture.dispose();
         background.dispose();
+        enter.dispose();
+        hover.dispose();
     }
 }

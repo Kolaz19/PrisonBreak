@@ -31,6 +31,8 @@ public class Level extends BasicScreen {
     Sound buttonInSound;
     Sound buttonOutSound;
 
+    private ArrayList<CharacterAnimation> animations;
+
 
     Level(Starter mainGame) {
         super();
@@ -46,6 +48,7 @@ public class Level extends BasicScreen {
         characters = new ArrayList<>();
         buttons = new ArrayList<>();
         doors = new ArrayList<>();
+        animations = new ArrayList<>();
         addCharacters();
         addButtons();
         addDoors();
@@ -56,6 +59,7 @@ public class Level extends BasicScreen {
         //Music
         musicManager = new MusicManager();
         addMusic();
+
     }
 
 
@@ -104,8 +108,10 @@ public class Level extends BasicScreen {
         for (Door door : doors) {
             spriteBatch.draw(door.getCorrectFrame(),door.getX(),door.getY());
         }
+        int counter = 0;
         for (Character entity : characters) {
-            spriteBatch.draw(charAnimation1.getRightAnimation(entity.getState(),getStateTime()),entity.getX(),entity.getY());
+            spriteBatch.draw(animations.get(counter).getRightAnimation(entity.getState(),getStateTime()),entity.getX(),entity.getY());
+            counter++;
         }
         spriteBatch.end();
         map.render("Second");
@@ -125,6 +131,31 @@ public class Level extends BasicScreen {
         charAnimation1.addIdleAnimation(new Animation<TextureRegion>(0.3f,atlas.findRegions("char1Idle"), Animation.PlayMode.LOOP));
         charAnimation1.addMoveLeftAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char1RunningLeft"), Animation.PlayMode.LOOP));
         charAnimation1.addMoveRightAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char1RunningRight"), Animation.PlayMode.LOOP));
+        animations.add(charAnimation1);
+
+        charAnimation2 = new CharacterAnimation();
+        charAnimation2.addIdleAnimation(new Animation<TextureRegion>(0.3f,atlas.findRegions("char2Idle"), Animation.PlayMode.LOOP));
+        charAnimation2.addMoveLeftAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char2RunningLeft"), Animation.PlayMode.LOOP));
+        charAnimation2.addMoveRightAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char2RunningRight"), Animation.PlayMode.LOOP));
+        animations.add(charAnimation2);
+
+        charAnimation3 = new CharacterAnimation();
+        charAnimation3.addIdleAnimation(new Animation<TextureRegion>(0.3f,atlas.findRegions("char3Idle"), Animation.PlayMode.LOOP));
+        charAnimation3.addMoveLeftAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char3RunningLeft"), Animation.PlayMode.LOOP));
+        charAnimation3.addMoveRightAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char3RunningRight"), Animation.PlayMode.LOOP));
+        animations.add(charAnimation3);
+
+        charAnimation4 = new CharacterAnimation();
+        charAnimation4.addIdleAnimation(new Animation<TextureRegion>(0.3f,atlas.findRegions("char4Idle"), Animation.PlayMode.LOOP));
+        charAnimation4.addMoveLeftAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char4RunningLeft"), Animation.PlayMode.LOOP));
+        charAnimation4.addMoveRightAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char4RunningRight"), Animation.PlayMode.LOOP));
+        animations.add(charAnimation4);
+
+        charAnimation5 = new CharacterAnimation();
+        charAnimation5.addIdleAnimation(new Animation<TextureRegion>(0.3f,atlas.findRegions("char5Idle"), Animation.PlayMode.LOOP));
+        charAnimation5.addMoveLeftAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char5RunningLeft"), Animation.PlayMode.LOOP));
+        charAnimation5.addMoveRightAnimation(new Animation<TextureRegion>(0.1f,atlas.findRegions("char5RunningRight"), Animation.PlayMode.LOOP));
+        animations.add(charAnimation5);
 
         stepSound1 = Gdx.audio.newSound(Gdx.files.internal("step1.mp3"));
         stepSound2 = Gdx.audio.newSound(Gdx.files.internal("step2.mp3"));
@@ -133,7 +164,7 @@ public class Level extends BasicScreen {
         character1.setTrapped(false);
         characters.add(character1);
 
-      Character character2 = new Character (14, 18,15,6, 8,10, 2, stepSound1, stepSound2);
+        Character character2 = new Character (14, 18,15,6, 8,10, 2, stepSound1, stepSound2);
         characters.add(character2);
 
         Character character3 = new Character (51, 21,15,6, 8,10, 4, stepSound1, stepSound2);
@@ -219,7 +250,21 @@ public class Level extends BasicScreen {
             //mainGame.startMenu();
             Gdx.app.exit();
         }
+
+        boolean outOfMap = true;
+        for (Character character : characters) {
+            if (character.getY() > 0) {
+                outOfMap = false;
+            }
+        }
+
+        if (outOfMap) {
+            mainGame.startEnd();
+        }
+
     }
+
+
 
     private void moveCharacters() {
         boolean playSound = false;
@@ -230,6 +275,7 @@ public class Level extends BasicScreen {
                 playSound = true;
             }
             if (Controls.isDownButtonPressed() || entity.isFree()) {
+                entity.addToSpeedLeft(entity.getSpeedLeft() * - 1);
                 entity.moveDown();
                 playSound = true;
             }

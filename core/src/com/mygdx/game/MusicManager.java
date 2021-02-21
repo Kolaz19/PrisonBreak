@@ -20,6 +20,7 @@ public class MusicManager {
     public void playCorrectTrack (ArrayList<Door> doors) {
         if (firstPlay) {
             tracks.get(0).getTrack().setLooping(false);
+            tracks.get(0).getTrack().setVolume(0.5f);
             tracks.get(0).getTrack().play();
             firstPlay = false;
 
@@ -27,6 +28,7 @@ public class MusicManager {
                 @Override
                 public void onCompletion(Music music) {
                     tracks.get(1).getTrack().setLooping(true);
+                    tracks.get(1).getTrack().setVolume(0.5f);
                     tracks.get(1).getTrack().play();
                 }
             });
@@ -34,33 +36,37 @@ public class MusicManager {
         }
 
         for (Door door : doors) {
-            if (door.getGroup() == 7 && door.isOpen() && secondPlay) {
+            if (door.getGroup() == 5 && door.isOpen() && secondPlay) {
                 secondPlay = false;
                 tracks.get(0).getTrack().stop();
                 tracks.get(1).getTrack().stop();
                 tracks.get(2).getTrack().setLooping(false);
+                tracks.get(2).getTrack().setVolume(0.5f);
                 tracks.get(2).getTrack().play();
                 tracks.get(2).getTrack().setOnCompletionListener(new Music.OnCompletionListener() {
                     @Override
                     public void onCompletion(Music music) {
                         tracks.get(3).getTrack().setLooping(true);
+                        tracks.get(3).getTrack().setVolume(0.5f);
                         tracks.get(3).getTrack().play();
                     }
                 });
             }
 
-            if (door.getGroup() == 5 && door.isOpen() && thirdPlay) {
+            if (door.getGroup() == 7 && door.isOpen() && thirdPlay) {
                 thirdPlay = false;
                 tracks.get(0).getTrack().stop();
                 tracks.get(1).getTrack().stop();
                 tracks.get(2).getTrack().stop();
                 tracks.get(3).getTrack().stop();
                 tracks.get(4).getTrack().setLooping(false);
+                tracks.get(4).getTrack().setVolume(0.5f);
                 tracks.get(4).getTrack().play();
                 tracks.get(4).getTrack().setOnCompletionListener(new Music.OnCompletionListener() {
                     @Override
                     public void onCompletion(Music music) {
                         tracks.get(5).getTrack().setLooping(true);
+                        tracks.get(5).getTrack().setVolume(0.5f);
                         tracks.get(5).getTrack().play();
                     }
                 });

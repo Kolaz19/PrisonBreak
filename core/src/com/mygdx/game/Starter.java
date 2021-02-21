@@ -18,6 +18,10 @@ public class Starter extends Game {
 		setScreen(new TitleScreen(this));
 	}
 
+	public void startEnd() {
+		setScreen(new EndScreen(this));
+	}
+
 	
 	@Override
 	public void dispose () {
