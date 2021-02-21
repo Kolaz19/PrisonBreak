@@ -19,6 +19,10 @@ public class Level extends BasicScreen {
     DoorOpener doorManager;
     TextureAtlas atlas;
     CharacterAnimation charAnimation1;
+    CharacterAnimation charAnimation2;
+    CharacterAnimation charAnimation3;
+    CharacterAnimation charAnimation4;
+    CharacterAnimation charAnimation5;
     MusicManager musicManager;
     Starter mainGame;
     Sound doorOpenSound;
@@ -84,7 +88,9 @@ public class Level extends BasicScreen {
         collisionManager.checkBlockedDoors(characters,doors);
         doorManager.checkForDoorsToOpen();
         doorManager.setCharacterFree(characters);
+
         moveCharacters();
+        musicManager.playCorrectTrack(doors);
 
 
         map.render("Default");
@@ -123,15 +129,21 @@ public class Level extends BasicScreen {
         stepSound1 = Gdx.audio.newSound(Gdx.files.internal("step1.mp3"));
         stepSound2 = Gdx.audio.newSound(Gdx.files.internal("step2.mp3"));
 
-        Character character1 = new Character(8,17,15,6, 8,10, 1, stepSound1, stepSound2);
+        Character character1 = new Character(8,16,15,6, 8,10, 1, stepSound1, stepSound2);
         character1.setTrapped(false);
         characters.add(character1);
 
-        Character character2 = new Character (14, 18,15,6, 8,10, 2, stepSound1, stepSound2);
+      Character character2 = new Character (14, 18,15,6, 8,10, 2, stepSound1, stepSound2);
         characters.add(character2);
 
         Character character3 = new Character (51, 21,15,6, 8,10, 4, stepSound1, stepSound2);
         characters.add(character3);
+
+        Character character4 = new Character (146, 7,15,6, 8,10, 6, stepSound1, stepSound2);
+        characters.add(character4);
+
+        Character character5 = new Character (89, 21,15,6, 8,10, 7, stepSound1, stepSound2);
+        characters.add(character5);
 
     }
 
@@ -163,6 +175,15 @@ public class Level extends BasicScreen {
         buttons.add(new Button(buttonUp,buttonDown,58,11,5,buttonInSound, buttonOutSound));
         buttons.add(new Button(buttonUp,buttonDown,68,18,5,buttonInSound, buttonOutSound));
         buttons.add(new Button(buttonUp,buttonDown,73,6,5,buttonInSound, buttonOutSound));
+
+        buttons.add(new Button(buttonUp,buttonDown,123,15,6,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,128,5,6,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,132,13,6,buttonInSound, buttonOutSound));
+
+        buttons.add(new Button(buttonUp,buttonDown,83,16,7,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,91,10,7,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,101,19,7,buttonInSound, buttonOutSound));
+        buttons.add(new Button(buttonUp,buttonDown,111,9,7,buttonInSound, buttonOutSound));
     }
 
     private void addDoors() {
@@ -177,6 +198,12 @@ public class Level extends BasicScreen {
         doors.add(new Door(56,18,doorOpen, 4, doorOpenSound));
 
         doors.add(new Door(77,9,doorOpen, 5, doorOpenSound));
+
+        doors.add(new Door(146,3,doorOpen, 6, doorOpenSound));
+        doors.add(new Door(141,11,doorOpen, 6, doorOpenSound));
+
+        doors.add(new Door(89,18,doorOpen, 7, doorOpenSound));
+        doors.add(new Door(159,12,doorOpen, 7, doorOpenSound));
     }
 
     private void adjustSpeedOfCharacters () {
@@ -189,7 +216,8 @@ public class Level extends BasicScreen {
 
     private void checkEnding() {
         if (Controls.isExitButtonPressed()) {
-            mainGame.startMenu();
+            //mainGame.startMenu();
+            Gdx.app.exit();
         }
     }
 
@@ -201,7 +229,7 @@ public class Level extends BasicScreen {
                 entity.moveUp();
                 playSound = true;
             }
-            if (Controls.isDownButtonPressed()) {
+            if (Controls.isDownButtonPressed() || entity.isFree()) {
                 entity.moveDown();
                 playSound = true;
             }

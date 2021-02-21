@@ -3,12 +3,10 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 
 public class Starter extends Game {
-	private TitleScreen mainMenu;
 
 	
 	@Override
 	public void create () {
-		mainMenu = new TitleScreen(this);
 		startMenu();
 	}
 
@@ -17,7 +15,7 @@ public class Starter extends Game {
 	}
 
 	public void startMenu() {
-		setScreen(mainMenu);
+		setScreen(new TitleScreen(this));
 	}
 
 	

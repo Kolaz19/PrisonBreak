@@ -14,6 +14,7 @@ public class Character extends Coordinate {
     Sound stepSound2;
     private boolean playFirstStep;
     int stepCounter;
+    private boolean isFree;
 
     private float speedRight;
     private float speedLeft;
@@ -22,6 +23,14 @@ public class Character extends Coordinate {
 
     public int getGroup() {
         return group;
+    }
+
+    public boolean isFree() {
+        return isFree;
+    }
+
+    public void setFree() {
+        isFree = true;
     }
 
 
@@ -44,6 +53,7 @@ public class Character extends Coordinate {
         setTrapped(true);
         this.group = group;
         playFirstStep = true;
+        isFree = false;
     }
 
     public void resetState(boolean diagonal) {

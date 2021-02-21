@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
+import java.util.ArrayList;
+
 public class MapCollision {
     private TiledMapTileLayer layer;
 
@@ -72,5 +74,18 @@ public class MapCollision {
     private boolean isTileBlocked (TiledMapTileLayer.Cell cell) {
         return (cell.getTile().getProperties().containsKey("blocked") && cell.getTile().getProperties().get("blocked",Boolean.class).equals(true));
     }
+
+    private boolean isTileFree (TiledMapTileLayer.Cell cell) {
+        return (cell.getTile().getProperties().containsKey("end") && cell.getTile().getProperties().get("end",Boolean.class).equals(true));
+    }
+
+    public void willHitFreeTile (Character character) {
+            Coordinate cordToHit = new Coordinate(character.getHitbox().getX() + character.getHitbox().getWidth() / 2, character.getHitbox().getY());
+            cordToHit.addToY(character.getSpeedDown() * -1 - 1);
+            if (isTileFree(cellAtPosition((int) cordToHit.getX(), (int) cordToHit.getY()))) {
+                character.setFree();
+            }
+    }
+
 
 }

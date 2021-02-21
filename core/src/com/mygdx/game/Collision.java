@@ -13,6 +13,12 @@ public class Collision {
     }
 
     public void reduceSpeedThroughCollision (Character character) {
+        if (!character.isFree()) {
+            mapCollision.willHitFreeTile(character);
+        }
+        if (character.isFree()) {
+            return;
+        }
         reduceSpeedUp(character);
         reduceSpeedDown(character);
         reduceSpeedRight(character);
