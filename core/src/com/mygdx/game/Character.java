@@ -10,7 +10,9 @@ public class Character extends Coordinate {
     private boolean trapped;
     private Rectangle hitbox;
     private int group;
-    Sound stepSound;
+    Sound stepSound1;
+    Sound stepSound2;
+    private boolean playFirstStep;
     int stepCounter;
 
     private float speedRight;
@@ -29,24 +31,26 @@ public class Character extends Coordinate {
         LEFT,
     }
 
-    public Character(float tileX, float tileY,int height, int width, int hitBoxHeight, int hitBoxWidth,int group, Sound step) {
+    public Character(float tileX, float tileY,int height, int width, int hitBoxHeight, int hitBoxWidth,int group, Sound step1, Sound step2) {
         super(tileX * 16, tileY * 16);
         this.height = height;
         this.width = width;
         state = State.IDLE;
         trapped = true;
         hitbox = new Rectangle((tileX * 16) + width / 2 - hitBoxWidth / 2, (tileY * 16) + width / 2 - hitBoxWidth / 2, hitBoxWidth , hitBoxHeight);
-        this.stepSound = step;
+        this.stepSound1 = step1;
+        this.stepSound2 = step2;
         stepCounter = 0;
         setTrapped(true);
         this.group = group;
+        playFirstStep = true;
     }
 
     public void resetState(boolean diagonal) {
         if (diagonal) {
-            speedRight = speedLeft = speedDown = speedUp = (float) (Math.sin(45) * 2);
+            speedRight = speedLeft = speedDown = speedUp = (float) (Math.sin(45) * 1.25f);
         } else {
-            speedRight = speedLeft = speedDown = speedUp = 2;
+            speedRight = speedLeft = speedDown = speedUp = 1.25f;
         }
         if (!Controls.isUpButtonPressed() && !Controls.isRightButtonPressed() && !Controls.isLeftButtonPressed() && !Controls.isDownButtonPressed()) {
             state = State.IDLE;
@@ -98,7 +102,13 @@ public class Character extends Coordinate {
         stepCounter++;
         if (stepCounter == 15) {
             stepCounter = 0;
-            stepSound.play(0.1f);
+            if (playFirstStep) {
+                stepSound1.play(0.1f);
+                playFirstStep = false;
+            } else {
+                stepSound2.play(0.07f);
+                playFirstStep = true;
+            }
         }
     }
 
@@ -145,5 +155,7 @@ public class Character extends Coordinate {
     public void setTrapped(boolean isTrapped) {
         trapped = isTrapped;
     }
+
+
 
 }

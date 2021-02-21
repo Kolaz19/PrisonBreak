@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector3;
 
 public abstract class BasicScreen extends ScreenAdapter {
     protected SpriteBatch spriteBatch;
-    private Vector3 mouseVector3;
     protected Coordinate mouseCoordinate;
     protected OrthographicCamera camera;
     private float stateTime;
@@ -17,9 +16,7 @@ public abstract class BasicScreen extends ScreenAdapter {
     public BasicScreen() {
         spriteBatch = new SpriteBatch();
         camera = new OrthographicCamera();
-        mouseVector3 = new Vector3();
         mouseCoordinate = new Coordinate(0, 0);
-        camera = new OrthographicCamera();
     }
 
     protected void clearScreen() {
@@ -42,11 +39,12 @@ public abstract class BasicScreen extends ScreenAdapter {
     }
 
     protected void updateMouseCoordinate() {
-        mouseVector3.x = Gdx.input.getX();
-        mouseVector3.y = Gdx.input.getY();
-        camera.unproject(mouseVector3);
-        mouseCoordinate.setX(mouseVector3.x);
-        mouseCoordinate.setY(mouseVector3.y);
+        Vector3 mousePos = new Vector3();
+        mousePos.x = Gdx.input.getX();
+        mousePos.y = Gdx.input.getY();
+        camera.unproject(mousePos);
+        mouseCoordinate.setX(mousePos.x);
+        mouseCoordinate.setY(mousePos.y);
     }
 
     protected abstract void setupCamera();

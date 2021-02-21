@@ -37,6 +37,10 @@ public class Map {
         return getLayer(layerName).getWidth() * getLayer(layerName).getTileWidth();
     }
 
+    public void dispose() {
+        map.dispose();
+    }
+
 
 
 }

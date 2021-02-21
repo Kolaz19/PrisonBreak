@@ -11,12 +11,18 @@ public class MusicManager {
         tracks = new ArrayList<>();
     }
 
-    public void playCorrectTrack () {
+    public void playCorrectTrack (ArrayList<Door> doors) {
 
     }
 
     public void addTrack(Music track, int number) {
         tracks.add(new MusicEntry(track, number));
+    }
+
+    public void dispose() {
+        for (MusicEntry track : tracks) {
+            track.getTrack().dispose();
+        }
     }
 
 

@@ -4,14 +4,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 public class MapCollision {
     private TiledMapTileLayer layer;
-    private int toleranceUp;
-    private int toleranceDown;
-    //TODO Create tolerance
 
     public MapCollision (Map map, int toleranceUp, int toleranceDown) {
         layer = map.getLayer("Default");
-        this.toleranceUp = toleranceUp;
-        this.toleranceDown = toleranceDown;
     }
 
     public boolean willHitLeftBoundary (Character character) {

@@ -81,7 +81,6 @@ public class Collision {
     }
 
     public void checkBlockedDoors(ArrayList<Character> characters, ArrayList<Door> doors) {
-        //TODO change 5 to match wall hitbox
         for (Character character : characters) {
             for (Door door : doors) {
                 if (door.isOpen()) {

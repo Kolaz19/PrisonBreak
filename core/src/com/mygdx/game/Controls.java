@@ -30,4 +30,8 @@ public class Controls {
         return (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && !(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT));
     }
 
+    public static boolean isExitButtonPressed() {
+        return Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
+    }
+
 }

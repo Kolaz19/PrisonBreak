@@ -12,12 +12,14 @@ public class Button {
     private Rectangle hitBox;
     private Sound inSound;
     private Sound outSound;
+    private int padding;
 
     public Button(TextureRegion buttonUp, TextureRegion buttonDown, int tileX, int tileY, int group, Sound in, Sound out) {
         buttonUpTexture = buttonUp;
         buttonDownTexture = buttonDown;
         this.group = group;
-        hitBox = new Rectangle(tileX * 16,tileY * 16,buttonDown.getRegionWidth(),buttonDown.getRegionHeight());
+        padding = 3;
+        hitBox = new Rectangle(tileX * 16 + padding,tileY * 16 + padding,buttonDown.getRegionWidth() - 2*padding,buttonDown.getRegionHeight() - 2*padding);
         isPressed = false;
         inSound = in;
         outSound = out;
@@ -33,11 +35,11 @@ public class Button {
 
 
     public int getX() {
-        return (int) hitBox.x;
+        return (int) hitBox.x - padding;
     }
 
     public int getY() {
-        return (int) hitBox.y;
+        return (int) hitBox.y - padding;
     }
 
     public Rectangle getHitbox () {
