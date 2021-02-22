@@ -275,7 +275,9 @@ public class Level extends BasicScreen {
                 playSound = true;
             }
             if (Controls.isDownButtonPressed() || entity.isFree()) {
-                entity.addToSpeedLeft(entity.getSpeedLeft() * - 1);
+                if(entity.isFree()) {
+                    entity.addToSpeedLeft(entity.getSpeedLeft() * -1);
+                }
                 entity.moveDown();
                 playSound = true;
             }
