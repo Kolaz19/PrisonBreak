@@ -151,5 +151,6 @@ public class TitleScreen extends BasicScreen {
         exitButtonPressedTexture.dispose();
         background.dispose();
         hover.dispose();
+        spriteBatch.dispose();
     }
 }

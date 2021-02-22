@@ -311,6 +311,6 @@ public class Level extends BasicScreen {
         buttonInSound.dispose();
         buttonOutSound.dispose();
         musicManager.dispose();
-        //spriteBatch.dispose();
+        spriteBatch.dispose();
     }
 }
