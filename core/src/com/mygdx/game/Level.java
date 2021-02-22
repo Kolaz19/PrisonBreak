@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -247,8 +248,8 @@ public class Level extends BasicScreen {
 
     private void checkEnding() {
         if (Controls.isExitButtonPressed()) {
-            //mainGame.startMenu();
-            Gdx.app.exit();
+            mainGame.startMenu();
+            //Gdx.app.exit();
         }
 
         boolean outOfMap = true;

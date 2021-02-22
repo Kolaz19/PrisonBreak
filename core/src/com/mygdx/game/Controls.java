@@ -31,7 +31,7 @@ public class Controls {
     }
 
     public static boolean isExitButtonPressed() {
-        return Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
+        return Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
     }
 
 }

@@ -21,7 +21,6 @@ public class TitleScreen extends BasicScreen {
     private Music musicStart;
     private Music musicLoop;
     private Sound hover;
-    private Sound enter;
 
     public TitleScreen(Starter mainGame) {
         super();
@@ -41,7 +40,6 @@ public class TitleScreen extends BasicScreen {
         musicStart.play();
         changeMusic();
         hover = Gdx.audio.newSound(Gdx.files.internal("buttonChange.mp3"));
-        enter = Gdx.audio.newSound(Gdx.files.internal("buttonEnter.mp3"));
     }
 
 
@@ -123,7 +121,6 @@ public class TitleScreen extends BasicScreen {
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             musicStart.stop();
             musicLoop.stop();
-            enter.play();
             mainGame.startGame();
         }
     }
@@ -146,14 +143,13 @@ public class TitleScreen extends BasicScreen {
 
     @Override
     public void dispose() {
-         musicStart.dispose();
+        musicStart.dispose();
         musicLoop.dispose();
         playButtonTexture.dispose();
         playButtonPressedTexture.dispose();
         exitButtonTexture.dispose();
         exitButtonPressedTexture.dispose();
         background.dispose();
-        enter.dispose();
         hover.dispose();
     }
 }

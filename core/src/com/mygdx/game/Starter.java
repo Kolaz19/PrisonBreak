@@ -27,4 +27,9 @@ public class Starter extends Game {
 	public void dispose () {
 
 	}
+
+	@Override
+	public void render() {
+		super.render();
+	}
 }
